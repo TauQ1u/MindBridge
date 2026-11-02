@@ -17,6 +17,6 @@ npm ci
 npm run dev:full
 ```
 
-前端：`http://localhost:5173`；后端检查：`http://localhost:3001/api/health`。本地默认账号 `admin / MindBridge@2026`，仅供开发。
+前端：`http://localhost:5173`；后端检查：`http://localhost:3001/api/health`。先用 `node scripts/hash-password.mjs <密码>` 生成唯一管理员口令哈希并写入 `.env`；未设置时后端不会启动。
 
 生产运行：`npm run build && npm start`。GitHub Pages 自动发布前端；登录和数据功能需另行部署后端，并配置 `VITE_API_BASE_URL`、`MINDBRIDGE_ALLOWED_ORIGINS` 与 HTTPS 安全选项。

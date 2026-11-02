@@ -33,7 +33,6 @@ const SCRYPT_PARAMS = { N: 16384, r: 8, p: 1 }
 const SCRYPT_KEYLEN = 64
 const TOKEN_TTL_MS = 12 * 60 * 60 * 1000 // 12 小时
 const SESSION_COOKIE = 'mb_session'
-const DEFAULT_ADMIN_PASSWORD = 'MindBridge@2026'
 
 const adminUser = process.env.MINDBRIDGE_ADMIN_USER || 'admin'
 const sessionSecret = process.env.MINDBRIDGE_SESSION_SECRET || crypto.randomBytes(32).toString('hex')
@@ -45,18 +44,14 @@ if (!process.env.MINDBRIDGE_SESSION_SECRET) {
 
 function loadAdminCredential() {
   const spec = process.env.MINDBRIDGE_ADMIN_PASSWORD_HASH
-  if (spec) {
-    const [algo, n, r, p, salt, hash] = spec.split('$')
-    if (algo === 'scrypt' && salt && hash && /^\d+$/.test(n) && /^\d+$/.test(r) && /^\d+$/.test(p)) {
-      return { salt, hash, params: { N: Number(n), r: Number(r), p: Number(p) } }
-    }
-    throw new Error('MINDBRIDGE_ADMIN_PASSWORD_HASH 格式错误，请使用 scripts/hash-password.mjs 生成')
+  if (!spec) {
+    throw new Error('未配置 MINDBRIDGE_ADMIN_PASSWORD_HASH。请运行 node scripts/hash-password.mjs <密码> 并将哈希写入 .env')
   }
-  console.warn(`[security] 未配置 MINDBRIDGE_ADMIN_PASSWORD_HASH，使用内置默认账号 ${adminUser} / ${DEFAULT_ADMIN_PASSWORD}`)
-  console.warn('[security] 生产部署请务必运行 node scripts/hash-password.mjs <密码> 生成专属口令哈希并写入 .env')
-  const salt = crypto.randomBytes(16).toString('hex')
-  const hash = crypto.scryptSync(DEFAULT_ADMIN_PASSWORD, salt, SCRYPT_KEYLEN, SCRYPT_PARAMS).toString('hex')
-  return { salt, hash, params: SCRYPT_PARAMS }
+  const [algo, n, r, p, salt, hash] = spec.split('$')
+  if (algo === 'scrypt' && salt && hash && /^\d+$/.test(n) && /^\d+$/.test(r) && /^\d+$/.test(p)) {
+    return { salt, hash, params: { N: Number(n), r: Number(r), p: Number(p) } }
+  }
+  throw new Error('MINDBRIDGE_ADMIN_PASSWORD_HASH 格式错误，请使用 scripts/hash-password.mjs 生成')
 }
 
 const adminCredential = loadAdminCredential()

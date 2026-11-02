@@ -7,7 +7,7 @@ const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<{ close: []; success: [] }>()
 
 const auth = useAuthStore()
-const username = ref('')
+const username = ref('admin')
 const password = ref('')
 const showPassword = ref(false)
 const submitting = ref(false)
@@ -18,6 +18,7 @@ const usernameInput = ref<HTMLInputElement | null>(null)
 watch(() => props.open, async (open) => {
   if (!open) return
   errorMessage.value = ''
+  username.value = 'admin'
   password.value = ''
   showPassword.value = false
   await nextTick()
@@ -67,7 +68,7 @@ function fail(message: string) {
               <span class="field-label">用户名</span>
               <span class="field-box">
                 <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.6-3.2 4.4-5 8-5s6.4 1.8 8 5"/></svg>
-                <input ref="usernameInput" v-model="username" type="text" autocomplete="username" placeholder="请输入用户名" :disabled="submitting" />
+                <input ref="usernameInput" v-model="username" type="text" autocomplete="username" readonly :disabled="submitting" />
               </span>
             </label>
 
@@ -93,7 +94,7 @@ function fail(message: string) {
             </button>
           </form>
 
-          <p class="login-note">本系统仅限授权科研人员使用 · 关闭浏览器后需重新登录</p>
+          <p class="login-note">演示账号登录不提供数据访问控制 · 关闭浏览器后需重新登录</p>
         </div>
       </div>
     </Transition>

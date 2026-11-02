@@ -19,4 +19,4 @@ npm run dev:full
 
 前端：`http://localhost:5173`；后端检查：`http://localhost:3001/api/health`。本地默认账号 `admin / MindBridge@2026`，仅供开发。
 
-生产运行：`npm run build && npm start`。GitHub Pages 只托管前端；登录和数据功能需另行部署后端，并配置仓库变量 `VITE_API_BASE_URL`、后端 `MINDBRIDGE_ALLOWED_ORIGINS` 及 HTTPS 安全选项。
+生产运行：`npm run build && npm start`。Pages 静态产物发布在 `MindBridge-site`；登录和数据功能需另行部署后端，并设置 `VITE_API_BASE_URL`、`MINDBRIDGE_ALLOWED_ORIGINS` 与 HTTPS 安全选项。

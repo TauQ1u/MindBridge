@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "experimentId": "MOUSE1-ketamine_like_recovery",
+  "conditionId": "ketamine_like_recovery",
+  "displayName": "给药后恢复",
+  "executionMode": "precomputed",
+  "mouseId": "mouse1",
+  "dataNature": "synthetic_demo",
+  "pipeline": {
+    "video": {
+      "model": "DeepLabCut-HRNetW32 + VideoMAE + MS-TCN++",
+      "modelVersion": "video-demo-v1"
+    },
+    "calcium": {
+      "model": "STFS-Former",
+      "modelVersion": "stfs-v2"
+    },
+    "sleep": {
+      "source": "preprovided-label"
+    },
+    "decoder": {
+      "model": "MouseNeuralBehaviorDecoder",
+      "modelVersion": "demo-1.0",
+      "contribution": "precomputed_attribution"
+    }
+  },
+  "defaultVersion": "demo-v1",
+  "versions": {
+    "demo-v1": {
+      "resultVersion": "demo-v1",
+      "labelVersion": "labels-demo-v1",
+      "createdAt": "2026-09-21T10:00:00+08:00",
+      "provenance": "versions/demo-v1/provenance.json"
+    }
+  },
+  "artifacts": {
+    "raw.video": "raw/video.mp4",
+    "raw.calcium": "raw/calcium_traces.csv",
+    "raw.eeg_emg": "raw/eeg_emg.csv",
+    "raw.meta": "raw/meta.json",
+    "review.timeline": "versions/demo-v1/review/timeline.csv",
+    "review.conflicts": "versions/demo-v1/review/conflicts.csv",
+    "review.video_prediction": "versions/demo-v1/review/video_prediction.csv",
+    "review.neural_prediction": "versions/demo-v1/review/neural_prediction.csv",
+    "review.sleep_stage_prediction": "versions/demo-v1/review/sleep_stage_prediction.csv",
+    "visualization.calcium": "versions/demo-v1/visualization/calcium.csv",
+    "visualization.dynamic_edges": "versions/demo-v1/visualization/dynamic_edges.csv",
+    "visualization.final_label_timeline": "versions/demo-v1/visualization/final_label_timeline.csv",
+    "visualization.metadata": "versions/demo-v1/visualization/metadata.json",
+    "visualization.behavior_stats": "versions/demo-v1/visualization/behavior_stats.json",
+    "model_output.decoder_modules": "versions/demo-v1/model_output/decoder_modules.json",
+    "model_output.neuron_module_profiles": "versions/demo-v1/model_output/neuron_module_profiles.csv",
+    "model_output.module_frame_evidence": "versions/demo-v1/model_output/module_frame_evidence.json"
+  },
+  "checksums": {
+    "raw.video": "sha256:75e6595904cd2d4a1c7fd8551c4a728a8b7ea887ed52a8e0b88e8b49fe840b0b",
+    "raw.calcium": "sha256:6c55a3bfa253a49f2ab5ed2ef8e97db9918d5e65bdf8b19339f3895146d01ed1",
+    "raw.eeg_emg": "sha256:f5720e1f9307cc44e124c5e464ee1e1f2b67b9abe2b78bd487fe9cf89789e15f",
+    "raw.meta": "sha256:c69ffb914264fd266debb97d011ff0e97ae99f06afdedf394054f4e359cc8832",
+    "review.timeline": "sha256:5866c2bf1b9a0507f55c78c909eaf6a5fbfa92c8a7fe155f1fa0b15fb0a76328",
+    "review.conflicts": "sha256:707c77dc7f6de99fb6f54a90af83c1f4044e6a9547c64291ca0f8530dd980cbf",
+    "review.video_prediction": "sha256:35fb766f456ba6c88c5472db7a8b5dc31aa2b9a790121bf4e8e8d9aef91d9d16",
+    "review.neural_prediction": "sha256:c585785f4bc1a84fa995bf2dc5f64009a0152d7a1d7e0a44d886a36cef0bb78b",
+    "review.sleep_stage_prediction": "sha256:15ede68f13b0da66ddccd04590bee736bb9365e9bfceff63efc0ec26660261a8",
+    "visualization.calcium": "sha256:6c55a3bfa253a49f2ab5ed2ef8e97db9918d5e65bdf8b19339f3895146d01ed1",
+    "visualization.dynamic_edges": "sha256:616d645ad9d1f1bdd76128872b13cdd40abaeee52667f2c9967bb1e401c46a99",
+    "visualization.final_label_timeline": "sha256:ba2dffc7daff62c65b2289ab72488f2d92817eb6c5474213ae8e8a3ec3327c1d",
+    "visualization.metadata": "sha256:c23b69ce259c17ad273be052dc07683488857b09cec018e4c0af855686c01660",
+    "visualization.behavior_stats": "sha256:2367ad1a52df7b57534409e2359a811ffdd217e837a902b62da27cf24fba2919",
+    "model_output.decoder_modules": "sha256:5dded4832985d7014c0749229d40619319fc9fdb542b86843e0aecf766dd45f3",
+    "model_output.neuron_module_profiles": "sha256:277cc9bc0fb7a9f0841798ff697204a1fc27e65b7b7244bc5421bf53097e5151",
+    "model_output.module_frame_evidence": "sha256:ec96f88388898de8f142f8f4eaba11b799fe6d97772258189476475207007e23"
+  }
+}

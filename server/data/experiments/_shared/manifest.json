@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "shared",
+  "executionMode": "precomputed",
+  "artifacts": {
+    "neuron_positions": "neuron_positions.csv",
+    "activity_norm": "activity_norm.json",
+    "layout_method": "layout_method.json",
+    "visualization_schema": "schema.json",
+    "review_manifest": "review_manifest.json",
+    "visualization_provenance": "visualization_provenance.json"
+  },
+  "checksums": {
+    "neuron_positions": "sha256:bf2b7844a443ab4bb3a71a977d7452d8716e19bc6e9cdc0a6c509fe217680f28",
+    "activity_norm": "sha256:ea0809f06f858911bca86ebb54027accbe193cf9233ee38f2333b4d2d029c2b7",
+    "layout_method": "sha256:8bc966dddf3066068d2f730dcfdc6506fc10e9cfa3c85fb4fdd221c7674a2d6a",
+    "visualization_schema": "sha256:549b1d9538b7a564ad20ce51adf62ba3174195ff1da9b55b4d6392ddecc68ace",
+    "review_manifest": "sha256:943f5cad53d6a36d575fa2f76636e550f6dd60a1c089ead79d30322f32d4d304",
+    "visualization_provenance": "sha256:a07149ca87556cdaa3d3c50bb2b7c527a9b73f1d37792444988b3d7d294cda89"
+  }
+}

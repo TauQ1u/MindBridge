@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "audience": "3D visualization; downstream consumers must not need any knowledge of the upstream video-AI / neural-decode review system",
+  "fields": {
+    "condition_id": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "cort_like",
+        "ketamine_like_recovery"
+      ]
+    },
+    "behavior": {
+      "type": "string",
+      "enum": [
+        "rearing",
+        "locomotion",
+        "motor",
+        "nesting",
+        "quiet_wake",
+        "W",
+        "NREM",
+        "REM",
+        "MA"
+      ],
+      "note": "primary derived label; precedence: rearing > locomotion > motor > nesting > quiet_wake; non-wake frames carry their sleep stage"
+    },
+    "sleep_stage": {
+      "type": "string",
+      "enum": [
+        "W",
+        "NREM",
+        "REM",
+        "MA"
+      ]
+    },
+    "rearing/locomotion/motor/nesting": {
+      "type": "int",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "seam_before": {
+      "type": "bool",
+      "note": "composition seam; do not interpret as a real transition"
+    }
+  },
+  "forbidden": "any key matching *_prediction, prediction_*, *_conflict, conflict_*, model_* — predictions and conflict markers stay in the upstream review system and never enter this directory",
+  "connectivity": {
+    "dynamic_edges": "per-condition dynamic_edges.csv; rolling Pearson over real dF/F, top 30 undirected edges per frame by |r|; window = 10 frames (~5.2 s at 1.9231 Hz); activity correlation, NOT anatomical/synaptic",
+    "neuron_positions": "package-level neuron_positions.csv; real 2D ROI centers from Calcium imaging_Trace.mat"
+  }
+}

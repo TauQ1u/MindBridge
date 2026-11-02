@@ -1,0 +1,10 @@
+{
+  "condition_id": "ketamine_like_recovery",
+  "contents": "raw system inputs — NO labels, NO predictions",
+  "files": {
+    "video.mp4": "behaviour video, 640x482, 15 fps, ~359.8 s",
+    "calcium_traces.csv": "raw dF/F of 117 neurons (undecoded), frame-major, 1.9231 Hz master-clock grid",
+    "eeg_emg.csv": "EEG1/EEG2/EMG/Activ at 1000 Hz, 360000 samples"
+  },
+  "note": "labels exist upstream but are intentionally NOT shipped here"
+}

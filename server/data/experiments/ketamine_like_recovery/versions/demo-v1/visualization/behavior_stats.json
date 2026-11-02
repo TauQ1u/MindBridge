@@ -1,0 +1,30 @@
+{
+  "condition_id": "ketamine_like_recovery",
+  "duration_seconds": 359.842,
+  "frames": 693,
+  "behavior_fraction": {
+    "rearing": 0.008658,
+    "locomotion": 0.119769,
+    "motor": 0.030303,
+    "nesting": 0.069264,
+    "quiet_wake": 0.271284,
+    "W": 0.0,
+    "NREM": 0.406926,
+    "REM": 0.066378,
+    "MA": 0.027417
+  },
+  "behavior_columns_fraction": {
+    "rearing": 0.008658,
+    "locomotion": 0.119769,
+    "motor": 0.030303,
+    "nesting": 0.069264
+  },
+  "sleep_stage_fraction": {
+    "W": 0.499278,
+    "NREM": 0.406926,
+    "REM": 0.066378,
+    "MA": 0.027417
+  },
+  "seam_count": 2,
+  "review_status": "baseline_accepted"
+}

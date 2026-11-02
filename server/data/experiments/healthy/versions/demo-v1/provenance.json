@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "1.0",
+  "resultVersion": "demo-v1",
+  "experimentId": "MOUSE1-healthy",
+  "conditionId": "healthy",
+  "executionMode": "precomputed",
+  "createdAt": "2026-09-21T10:00:00+08:00",
+  "pipeline": {
+    "video": {
+      "model": "DeepLabCut-HRNetW32 + VideoMAE + MS-TCN++",
+      "modelVersion": "video-demo-v1"
+    },
+    "calcium": {
+      "model": "STFS-Former",
+      "modelVersion": "stfs-v2"
+    },
+    "sleep": {
+      "source": "preprovided-label"
+    }
+  },
+  "reviewPackage": {
+    "condition_id": "healthy",
+    "display_name": "健康",
+    "frames": 693,
+    "frames_by_stage": {
+      "W": 372,
+      "NREM": 272,
+      "REM": 31,
+      "MA": 18
+    },
+    "video_ai": {
+      "role": "wake_behavior",
+      "frame_level_error_rate": 0,
+      "wrong_frames": 0,
+      "construction": "synthetic demo stand-in; scripted few-frame errors on confusable adjacent behaviors"
+    },
+    "eeg_emg_scoring": {
+      "role": "sleep_stage",
+      "frame_level_error_rate": 0,
+      "wrong_frames": 0,
+      "construction": "synthetic demo stand-in; acts as the sleep-stage reference, so no scripted errors"
+    },
+    "neural_decoder": {
+      "role": "sleep_stage + wake_behavior",
+      "frame_level_error_rate": 0,
+      "wrong_stage_frames": 0,
+      "wrong_behavior_frames": 1,
+      "construction": "synthetic demo stand-in (patented decoder, fewer errors than the video AI); W<->NREM boundary offsets + rearing FN"
+    },
+    "conflict_frames": 1,
+    "conflicts_by_type": {
+      "wake_behavior": 1
+    },
+    "conflict_plan": [
+      {
+        "frame_id": 158,
+        "who": "neural",
+        "kind": "rearing_fn"
+      }
+    ],
+    "final_label_source": "derived/visualization_input (human-reviewed baseline)"
+  },
+  "dataLineage": "predictions are SYNTHETIC deterministic stand-ins; final_* columns are the human-reviewed baseline and equal the 3D modeling package",
+  "modalityRoles": {
+    "video": {
+      "source": "video_prediction.csv",
+      "role": "wake_behavior",
+      "core_behaviors": [
+        "rearing",
+        "locomotion",
+        "motor",
+        "nesting"
+      ],
+      "fallback_behavior": "quiet_wake",
+      "definition": "quiet_wake = confirmed Wake but not one of the four core behaviors; NA outside Wake"
+    },
+    "eeg_emg": {
+      "source": "sleep_stage_prediction.csv",
+      "role": "sleep_stage",
+      "sleep_stages": [
+        "W",
+        "NREM",
+        "REM",
+        "MA"
+      ],
+      "demo_primary_stages": [
+        "W",
+        "NREM",
+        "REM"
+      ]
+    },
+    "calcium": {
+      "source": "neural_prediction.csv",
+      "role": "sleep_stage + wake_behavior",
+      "rule": "neural_behavior is valid only when neural_sleep_stage == W; otherwise NA"
+    },
+    "timeline": {
+      "source": "timeline.csv",
+      "role": "merge of all three sources + review_type / disagreement / reviewed + final labels"
+    }
+  },
+  "reviewLogic": [
+    "1. compare EEG/EMG sleep stage vs calcium sleep stage; mismatch -> sleep_stage conflict",
+    "2. only when both agree on W, compare video behavior vs calcium behavior; mismatch -> wake_behavior conflict"
+  ],
+  "literatureContext": {
+    "note": "standard good-method rates, far above these demo values",
+    "video_ai": [
+      "JAABA, Kabra et al. 2013 Nat Methods: average error on important frames 4.4% for mice",
+      "Sturman et al. 2020: deep classifiers 86+/-3% frame accuracy on complex spontaneous behaviours"
+    ],
+    "neural_decoder": [
+      "mesoscopic CNN-RNN calcium decoding: 0.87-0.97 accuracy (binary run/rest)",
+      "linear SVM decoding of complex behaviours from calcium typically 70-85%"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "built_at": "2026-09-17T10:38:14",
+  "builder": "scripts/build_visualization_input.py",
+  "principle": "only human-reviewed final behavior semantics enter this directory",
+  "conditions": {
+    "healthy": {
+      "source": "derived\\mouse1_state_excerpts\\healthy\\labels.csv",
+      "review_status": "baseline_accepted",
+      "sha256": "c85e94ed65eb77057f6f252567e8a46cd495825a4400b386fab4656576e30678"
+    },
+    "cort_like": {
+      "source": "derived\\mouse1_state_excerpts\\cort_like\\labels.csv",
+      "review_status": "baseline_accepted",
+      "sha256": "674ad78e9d71deb69433b60110493e329d57011dd9b3aa0a3868684e7669a293"
+    },
+    "ketamine_like_recovery": {
+      "source": "derived\\mouse1_state_excerpts\\ketamine_like_recovery\\labels.csv",
+      "review_status": "baseline_accepted",
+      "sha256": "2fe208a57bae9c439fac98913474ac15a6e3d998d02e84830ed744a7ef0341f1"
+    }
+  }
+}

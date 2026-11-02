@@ -1,0 +1,30 @@
+{
+  "condition_id": "healthy",
+  "duration_seconds": 359.84,
+  "frames": 693,
+  "behavior_fraction": {
+    "rearing": 0.01443,
+    "locomotion": 0.246753,
+    "motor": 0.116883,
+    "nesting": 0.050505,
+    "quiet_wake": 0.108225,
+    "W": 0.0,
+    "NREM": 0.392496,
+    "REM": 0.044733,
+    "MA": 0.025974
+  },
+  "behavior_columns_fraction": {
+    "rearing": 0.01443,
+    "locomotion": 0.246753,
+    "motor": 0.116883,
+    "nesting": 0.050505
+  },
+  "sleep_stage_fraction": {
+    "W": 0.536797,
+    "NREM": 0.392496,
+    "REM": 0.044733,
+    "MA": 0.025974
+  },
+  "seam_count": 2,
+  "review_status": "baseline_accepted"
+}

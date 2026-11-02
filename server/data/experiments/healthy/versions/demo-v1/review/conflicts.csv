@@ -1,0 +1,2 @@
+conflict_id,frame_id,timestamp_s,conflict_type,reference_label,neural_label,status
+C001,158,82.16,wake_behavior,rearing,quiet_wake,pending

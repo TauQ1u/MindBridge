@@ -1,0 +1,25 @@
+node_modules
+.env
+*.local
+node_modules/
+.DS_Store
+
+# 构建产物
+dist/
+tsconfig.tsbuildinfo
+tsconfig.node.tsbuildinfo
+
+# 运行时状态
+server/state/
+server/data/reports/generated-*.md
+
+# 独立维护的旧版 3D 建模仓库（内嵌 git 仓库，不纳入本仓库）
+neuron-3d-visualization/
+
+# 数据压缩包（原始数据已在 server/data 中）
+*.zip
+
+# 验证截图与工具配置
+verify-shots/
+.claude/
+.zcode/

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0",
+  "analysisId": "compare_healthy_recovery",
+  "kind": "pairwise",
+  "conditions": [
+    "healthy",
+    "ketamine_like_recovery"
+  ],
+  "generatedAt": "2026-09-21T10:00:00+08:00",
+  "executionMode": "precomputed",
+  "metrics": {
+    "healthy": {
+      "conditionId": "healthy",
+      "displayName": "健康",
+      "durationSeconds": 359.84,
+      "frames": 693,
+      "samplingRateHz": 1.9231,
+      "neuronCount": 117,
+      "edgeMethod": "rolling Pearson correlation over real dF/F activity",
+      "sleepStageFraction": {
+        "W": 0.536797,
+        "NREM": 0.392496,
+        "REM": 0.044733,
+        "MA": 0.025974
+      },
+      "behaviorFraction": {
+        "rearing": 0.01443,
+        "locomotion": 0.246753,
+        "motor": 0.116883,
+        "nesting": 0.050505,
+        "quiet_wake": 0.108225,
+        "W": 0,
+        "NREM": 0.392496,
+        "REM": 0.044733,
+        "MA": 0.025974
+      },
+      "reviewStatus": "baseline_accepted",
+      "conflicts": {
+        "total": 1,
+        "byType": {
+          "wake_behavior": 1
+        },
+        "plan": [
+          {
+            "frame_id": 158,
+            "who": "neural",
+            "kind": "rearing_fn"
+          }
+        ]
+      },
+      "framesByStage": {
+        "W": 372,
+        "NREM": 272,
+        "REM": 31,
+        "MA": 18
+      }
+    },
+    "ketamine_like_recovery": {
+      "conditionId": "ketamine_like_recovery",
+      "displayName": "给药后恢复",
+      "durationSeconds": 359.842,
+      "frames": 693,
+      "samplingRateHz": 1.9231,
+      "neuronCount": 117,
+      "edgeMethod": "rolling Pearson correlation over real dF/F activity",
+      "sleepStageFraction": {
+        "W": 0.499278,
+        "NREM": 0.406926,
+        "REM": 0.066378,
+        "MA": 0.027417
+      },
+      "behaviorFraction": {
+        "rearing": 0.008658,
+        "locomotion": 0.119769,
+        "motor": 0.030303,
+        "nesting": 0.069264,
+        "quiet_wake": 0.271284,
+        "W": 0,
+        "NREM": 0.406926,
+        "REM": 0.066378,
+        "MA": 0.027417
+      },
+      "reviewStatus": "baseline_accepted",
+      "conflicts": {
+        "total": 2,
+        "byType": {
+          "wake_behavior": 1,
+          "sleep_stage": 1
+        },
+        "plan": [
+          {
+            "frame_id": 36,
+            "who": "video",
+            "kind": "locomotion_as_motor"
+          },
+          {
+            "frame_id": 110,
+            "who": "neural",
+            "kind": "boundary_late"
+          }
+        ]
+      },
+      "framesByStage": {
+        "W": 346,
+        "NREM": 282,
+        "REM": 46,
+        "MA": 19
+      }
+    }
+  },
+  "comparison": {
+    "baseline": "healthy",
+    "deltas": {
+      "ketamine_like_recovery": {
+        "vsBaseline": "healthy",
+        "sleepStageFractionDelta": {
+          "W": -0.037519,
+          "NREM": 0.01443,
+          "REM": 0.021645,
+          "MA": 0.001443
+        },
+        "behaviorFractionDelta": {
+          "rearing": -0.005772,
+          "locomotion": -0.126984,
+          "motor": -0.08658,
+          "nesting": 0.018759,
+          "quiet_wake": 0.163059,
+          "W": 0,
+          "NREM": 0.01443,
+          "REM": 0.021645,
+          "MA": 0.001443
+        },
+        "neuronCountDelta": 0,
+        "conflictCountDelta": 1
+      }
+    }
+  }
+}

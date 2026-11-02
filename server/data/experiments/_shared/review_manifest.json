@@ -1,0 +1,230 @@
+{
+  "package": "mouse1 multimodal consistency review package",
+  "mouse": "mouse1",
+  "data_nature": "synthetic_demo",
+  "generated": "2026-09-19",
+  "schema": {
+    "canonical_columns": [
+      "frame_id",
+      "timestamp_s"
+    ],
+    "legacy_mapping": {
+      "frame": "frame_id",
+      "time_seconds": "timestamp_s"
+    },
+    "note": "new review package uses frame_id/timestamp_s; upstream files keep frame/time_seconds and are mapped by the transform layer, never renamed in place"
+  },
+  "modality_roles": {
+    "video": {
+      "source": "video_prediction.csv",
+      "role": "wake_behavior",
+      "core_behaviors": [
+        "rearing",
+        "locomotion",
+        "motor",
+        "nesting"
+      ],
+      "fallback_behavior": "quiet_wake",
+      "definition": "quiet_wake = confirmed Wake but not one of the four core behaviors; NA outside Wake"
+    },
+    "eeg_emg": {
+      "source": "sleep_stage_prediction.csv",
+      "role": "sleep_stage",
+      "sleep_stages": [
+        "W",
+        "NREM",
+        "REM",
+        "MA"
+      ],
+      "demo_primary_stages": [
+        "W",
+        "NREM",
+        "REM"
+      ]
+    },
+    "calcium": {
+      "source": "neural_prediction.csv",
+      "role": "sleep_stage + wake_behavior",
+      "rule": "neural_behavior is valid only when neural_sleep_stage == W; otherwise NA"
+    },
+    "timeline": {
+      "source": "timeline.csv",
+      "role": "merge of all three sources + review_type / disagreement / reviewed + final labels"
+    }
+  },
+  "review_types": [
+    "wake_behavior",
+    "sleep_stage"
+  ],
+  "review_logic": [
+    "1. compare EEG/EMG sleep stage vs calcium sleep stage; mismatch -> sleep_stage conflict",
+    "2. only when both agree on W, compare video behavior vs calcium behavior; mismatch -> wake_behavior conflict"
+  ],
+  "ma_policy": {
+    "stage": "MA stays a legal sleep_stage (~2.6% of frames, inherited from the reviewed baseline); it is never scripted as a conflict and is not an on-stage demo case",
+    "show_line": "系统支持 W / NREM / REM / MA；本次 Demo 选取稳定片段进行展示"
+  },
+  "demo_cases": [
+    "consistent",
+    "wake_behavior_conflict",
+    "sleep_stage_conflict"
+  ],
+  "conditions": [
+    {
+      "condition_id": "healthy",
+      "display_name": "健康",
+      "frames": 693,
+      "frames_by_stage": {
+        "W": 372,
+        "NREM": 272,
+        "REM": 31,
+        "MA": 18
+      },
+      "video_ai": {
+        "role": "wake_behavior",
+        "frame_level_error_rate": 0.0,
+        "wrong_frames": 0,
+        "construction": "synthetic demo stand-in; scripted few-frame errors on confusable adjacent behaviors"
+      },
+      "eeg_emg_scoring": {
+        "role": "sleep_stage",
+        "frame_level_error_rate": 0.0,
+        "wrong_frames": 0,
+        "construction": "synthetic demo stand-in; acts as the sleep-stage reference, so no scripted errors"
+      },
+      "neural_decoder": {
+        "role": "sleep_stage + wake_behavior",
+        "frame_level_error_rate": 0.0,
+        "wrong_stage_frames": 0,
+        "wrong_behavior_frames": 1,
+        "construction": "synthetic demo stand-in (patented decoder, fewer errors than the video AI); W<->NREM boundary offsets + rearing FN"
+      },
+      "conflict_frames": 1,
+      "conflicts_by_type": {
+        "wake_behavior": 1
+      },
+      "conflict_plan": [
+        {
+          "frame_id": 158,
+          "who": "neural",
+          "kind": "rearing_fn"
+        }
+      ],
+      "final_label_source": "derived/visualization_input (human-reviewed baseline)"
+    },
+    {
+      "condition_id": "cort_like",
+      "display_name": "抑郁",
+      "frames": 691,
+      "frames_by_stage": {
+        "W": 343,
+        "NREM": 272,
+        "REM": 57,
+        "MA": 19
+      },
+      "video_ai": {
+        "role": "wake_behavior",
+        "frame_level_error_rate": 0.0029,
+        "wrong_frames": 1,
+        "construction": "synthetic demo stand-in; scripted few-frame errors on confusable adjacent behaviors"
+      },
+      "eeg_emg_scoring": {
+        "role": "sleep_stage",
+        "frame_level_error_rate": 0.0,
+        "wrong_frames": 0,
+        "construction": "synthetic demo stand-in; acts as the sleep-stage reference, so no scripted errors"
+      },
+      "neural_decoder": {
+        "role": "sleep_stage + wake_behavior",
+        "frame_level_error_rate": 0.0029,
+        "wrong_stage_frames": 2,
+        "wrong_behavior_frames": 1,
+        "construction": "synthetic demo stand-in (patented decoder, fewer errors than the video AI); W<->NREM boundary offsets + rearing FN"
+      },
+      "conflict_frames": 3,
+      "conflicts_by_type": {
+        "sleep_stage": 2,
+        "wake_behavior": 1
+      },
+      "conflict_plan": [
+        {
+          "frame_id": 13,
+          "who": "video",
+          "kind": "motor_as_locomotion"
+        },
+        {
+          "frame_id": 130,
+          "who": "neural",
+          "kind": "boundary_late"
+        },
+        {
+          "frame_id": 444,
+          "who": "neural",
+          "kind": "boundary_early"
+        }
+      ],
+      "final_label_source": "derived/visualization_input (human-reviewed baseline)"
+    },
+    {
+      "condition_id": "ketamine_like_recovery",
+      "display_name": "给药后恢复",
+      "frames": 693,
+      "frames_by_stage": {
+        "W": 346,
+        "NREM": 282,
+        "REM": 46,
+        "MA": 19
+      },
+      "video_ai": {
+        "role": "wake_behavior",
+        "frame_level_error_rate": 0.0029,
+        "wrong_frames": 1,
+        "construction": "synthetic demo stand-in; scripted few-frame errors on confusable adjacent behaviors"
+      },
+      "eeg_emg_scoring": {
+        "role": "sleep_stage",
+        "frame_level_error_rate": 0.0,
+        "wrong_frames": 0,
+        "construction": "synthetic demo stand-in; acts as the sleep-stage reference, so no scripted errors"
+      },
+      "neural_decoder": {
+        "role": "sleep_stage + wake_behavior",
+        "frame_level_error_rate": 0.0014,
+        "wrong_stage_frames": 1,
+        "wrong_behavior_frames": 1,
+        "construction": "synthetic demo stand-in (patented decoder, fewer errors than the video AI); W<->NREM boundary offsets + rearing FN"
+      },
+      "conflict_frames": 2,
+      "conflicts_by_type": {
+        "wake_behavior": 1,
+        "sleep_stage": 1
+      },
+      "conflict_plan": [
+        {
+          "frame_id": 36,
+          "who": "video",
+          "kind": "locomotion_as_motor"
+        },
+        {
+          "frame_id": 110,
+          "who": "neural",
+          "kind": "boundary_late"
+        }
+      ],
+      "final_label_source": "derived/visualization_input (human-reviewed baseline)"
+    }
+  ],
+  "legacy_merge_note": "review_summary.json / review_method.json and the duplicated final_label_timeline.csv are folded into this manifest and timeline.csv",
+  "data_lineage": "predictions are SYNTHETIC deterministic stand-ins; final_* columns are the human-reviewed baseline and equal the 3D modeling package",
+  "literature_context": {
+    "note": "standard good-method rates, far above these demo values",
+    "video_ai": [
+      "JAABA, Kabra et al. 2013 Nat Methods: average error on important frames 4.4% for mice",
+      "Sturman et al. 2020: deep classifiers 86+/-3% frame accuracy on complex spontaneous behaviours"
+    ],
+    "neural_decoder": [
+      "mesoscopic CNN-RNN calcium decoding: 0.87-0.97 accuracy (binary run/rest)",
+      "linear SVM decoding of complex behaviours from calcium typically 70-85%"
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0",
+  "analysisId": "cort_like",
+  "kind": "single",
+  "conditions": [
+    "cort_like"
+  ],
+  "generatedAt": "2026-09-21T10:00:00+08:00",
+  "executionMode": "precomputed",
+  "metrics": {
+    "cort_like": {
+      "conditionId": "cort_like",
+      "displayName": "抑郁",
+      "durationSeconds": 358.803,
+      "frames": 691,
+      "samplingRateHz": 1.9231,
+      "neuronCount": 117,
+      "edgeMethod": "rolling Pearson correlation over real dF/F activity",
+      "sleepStageFraction": {
+        "W": 0.496382,
+        "NREM": 0.393632,
+        "REM": 0.082489,
+        "MA": 0.027496
+      },
+      "behaviorFraction": {
+        "rearing": 0.005789,
+        "locomotion": 0.018813,
+        "motor": 0.127352,
+        "nesting": 0.10275,
+        "quiet_wake": 0.241679,
+        "W": 0,
+        "NREM": 0.393632,
+        "REM": 0.082489,
+        "MA": 0.027496
+      },
+      "reviewStatus": "baseline_accepted",
+      "conflicts": {
+        "total": 3,
+        "byType": {
+          "sleep_stage": 2,
+          "wake_behavior": 1
+        },
+        "plan": [
+          {
+            "frame_id": 13,
+            "who": "video",
+            "kind": "motor_as_locomotion"
+          },
+          {
+            "frame_id": 130,
+            "who": "neural",
+            "kind": "boundary_late"
+          },
+          {
+            "frame_id": 444,
+            "who": "neural",
+            "kind": "boundary_early"
+          }
+        ]
+      },
+      "framesByStage": {
+        "W": 343,
+        "NREM": 272,
+        "REM": 57,
+        "MA": 19
+      }
+    }
+  }
+}

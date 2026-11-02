@@ -1,0 +1,29 @@
+{
+  "condition_id": "healthy",
+  "subject": "Mouse #1",
+  "files": {
+    "final_label_timeline": "final_label_timeline.csv",
+    "calcium_activity": "calcium.csv",
+    "behavior_stats": "behavior_stats.json",
+    "dynamic_edges": "dynamic_edges.csv",
+    "neuron_positions": "../neuron_positions.csv"
+  },
+  "neuron_count": 117,
+  "frame_count": 693,
+  "sampling_rate_hz": 1.9231,
+  "edge_method": "rolling Pearson correlation over real dF/F activity",
+  "edge_direction": "undirected",
+  "edge_weight": "absolute Pearson correlation",
+  "correlation_sign_column": "correlation",
+  "rolling_window_frames": 10,
+  "rolling_window_seconds": 5.2,
+  "top_edges_per_timestamp": 30,
+  "dynamic_edge_rows": 20790,
+  "interpretation": "dynamic functional connectivity / activity correlation network; NOT anatomical or synaptic connections",
+  "roi_source": "real 2D ROI centers from Calcium imaging_Trace.mat (center); single-plane imaging has no anatomical depth, so z is a functional coordinate from spectral embedding (shared, fixed across conditions; see package-level layout_method.json); z_anatomical=false",
+  "frontend_join_keys": {
+    "activity_to_node": "calcium.csv columns n1..n117 match neuron_positions.neuron_name",
+    "edge_to_node": "dynamic_edges.source/target match neuron_positions.neuron_name",
+    "edge_to_frame": "dynamic_edges.frame matches final_label_timeline.csv row order"
+  }
+}

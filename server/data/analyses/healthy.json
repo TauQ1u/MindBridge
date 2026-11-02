@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "analysisId": "healthy",
+  "kind": "single",
+  "conditions": [
+    "healthy"
+  ],
+  "generatedAt": "2026-09-21T10:00:00+08:00",
+  "executionMode": "precomputed",
+  "metrics": {
+    "healthy": {
+      "conditionId": "healthy",
+      "displayName": "健康",
+      "durationSeconds": 359.84,
+      "frames": 693,
+      "samplingRateHz": 1.9231,
+      "neuronCount": 117,
+      "edgeMethod": "rolling Pearson correlation over real dF/F activity",
+      "sleepStageFraction": {
+        "W": 0.536797,
+        "NREM": 0.392496,
+        "REM": 0.044733,
+        "MA": 0.025974
+      },
+      "behaviorFraction": {
+        "rearing": 0.01443,
+        "locomotion": 0.246753,
+        "motor": 0.116883,
+        "nesting": 0.050505,
+        "quiet_wake": 0.108225,
+        "W": 0,
+        "NREM": 0.392496,
+        "REM": 0.044733,
+        "MA": 0.025974
+      },
+      "reviewStatus": "baseline_accepted",
+      "conflicts": {
+        "total": 1,
+        "byType": {
+          "wake_behavior": 1
+        },
+        "plan": [
+          {
+            "frame_id": 158,
+            "who": "neural",
+            "kind": "rearing_fn"
+          }
+        ]
+      },
+      "framesByStage": {
+        "W": 372,
+        "NREM": 272,
+        "REM": 31,
+        "MA": 18
+      }
+    }
+  }
+}

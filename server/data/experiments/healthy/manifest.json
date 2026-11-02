@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "experimentId": "MOUSE1-healthy",
+  "conditionId": "healthy",
+  "displayName": "健康",
+  "executionMode": "precomputed",
+  "mouseId": "mouse1",
+  "dataNature": "synthetic_demo",
+  "pipeline": {
+    "video": {
+      "model": "DeepLabCut-HRNetW32 + VideoMAE + MS-TCN++",
+      "modelVersion": "video-demo-v1"
+    },
+    "calcium": {
+      "model": "STFS-Former",
+      "modelVersion": "stfs-v2"
+    },
+    "sleep": {
+      "source": "preprovided-label"
+    },
+    "decoder": {
+      "model": "MouseNeuralBehaviorDecoder",
+      "modelVersion": "demo-1.0",
+      "contribution": "precomputed_attribution"
+    }
+  },
+  "defaultVersion": "demo-v1",
+  "versions": {
+    "demo-v1": {
+      "resultVersion": "demo-v1",
+      "labelVersion": "labels-demo-v1",
+      "createdAt": "2026-09-21T10:00:00+08:00",
+      "provenance": "versions/demo-v1/provenance.json"
+    }
+  },
+  "artifacts": {
+    "raw.video": "raw/video.mp4",
+    "raw.calcium": "raw/calcium_traces.csv",
+    "raw.eeg_emg": "raw/eeg_emg.csv",
+    "raw.meta": "raw/meta.json",
+    "review.timeline": "versions/demo-v1/review/timeline.csv",
+    "review.conflicts": "versions/demo-v1/review/conflicts.csv",
+    "review.video_prediction": "versions/demo-v1/review/video_prediction.csv",
+    "review.neural_prediction": "versions/demo-v1/review/neural_prediction.csv",
+    "review.sleep_stage_prediction": "versions/demo-v1/review/sleep_stage_prediction.csv",
+    "visualization.calcium": "versions/demo-v1/visualization/calcium.csv",
+    "visualization.dynamic_edges": "versions/demo-v1/visualization/dynamic_edges.csv",
+    "visualization.final_label_timeline": "versions/demo-v1/visualization/final_label_timeline.csv",
+    "visualization.metadata": "versions/demo-v1/visualization/metadata.json",
+    "visualization.behavior_stats": "versions/demo-v1/visualization/behavior_stats.json",
+    "model_output.decoder_modules": "versions/demo-v1/model_output/decoder_modules.json",
+    "model_output.neuron_module_profiles": "versions/demo-v1/model_output/neuron_module_profiles.csv",
+    "model_output.module_frame_evidence": "versions/demo-v1/model_output/module_frame_evidence.json"
+  },
+  "checksums": {
+    "raw.video": "sha256:d361082416d35c0d51b0767173f77631e2b4df1f98de92877d834fa9121c5541",
+    "raw.calcium": "sha256:562044bfe36a647408669af0150569bd05a76829d26f3d865d04e0ce95196717",
+    "raw.eeg_emg": "sha256:35c1e22cd55a110ba1941084f2a7587d0f4f393c7caf4678718f1d3c78ecd24b",
+    "raw.meta": "sha256:a8a5fbe9f52b40ca78ad85e441716a191a6477e154b8bac4ec7599a0e7bf3b03",
+    "review.timeline": "sha256:46eaaa2677ea02ef0913a425fcf7978a1a82304c05d853b9261a978f11513ab0",
+    "review.conflicts": "sha256:ab9b6300e89e5014348129bf208f544f7aba704c8945fd037492c1a80d551d76",
+    "review.video_prediction": "sha256:9ca88b4ec2672d24112deba5a3b758369b05649b54d8ffa9f28ffd86ea209eca",
+    "review.neural_prediction": "sha256:14422e3ab399e9c6c530a31ced9d125a92034bbf582684c6ba002f5d8c0daa20",
+    "review.sleep_stage_prediction": "sha256:b1b5de1d878136f7985c930aedc77377f20d9806ef430eae9b233a064b5e3492",
+    "visualization.calcium": "sha256:562044bfe36a647408669af0150569bd05a76829d26f3d865d04e0ce95196717",
+    "visualization.dynamic_edges": "sha256:720e22999960cb5a19bdc21ed631eb6d915ed27ff16abf9f0a6305161e596f19",
+    "visualization.final_label_timeline": "sha256:bb951059eb04de459e9a62cc9aee5c101bf8ae4a190f1ed486c177a07c1d9fd9",
+    "visualization.metadata": "sha256:8fd121942aa884fad0372ee787492e80e64289a3aea225bca522b829533dd66f",
+    "visualization.behavior_stats": "sha256:bcb5719e9844fa790ed5e669c8c632c58017f397d668452703f207c24518163b",
+    "model_output.decoder_modules": "sha256:41350450a669d1fccba6642f9abc4392ac054b2e9f316627fde83af7234ec374",
+    "model_output.neuron_module_profiles": "sha256:fe00662327a738f34b10b733fd8ac8644b62d8d8db4a5b74cea49a96b26b652b",
+    "model_output.module_frame_evidence": "sha256:89e11cc9049b301bb58e33aa7c665ce60c55bcd982e77eb5d8edc501d565cb03"
+  }
+}

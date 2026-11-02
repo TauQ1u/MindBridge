@@ -1,0 +1,30 @@
+{
+  "condition_id": "cort_like",
+  "duration_seconds": 358.803,
+  "frames": 691,
+  "behavior_fraction": {
+    "rearing": 0.005789,
+    "locomotion": 0.018813,
+    "motor": 0.127352,
+    "nesting": 0.10275,
+    "quiet_wake": 0.241679,
+    "W": 0.0,
+    "NREM": 0.393632,
+    "REM": 0.082489,
+    "MA": 0.027496
+  },
+  "behavior_columns_fraction": {
+    "rearing": 0.005789,
+    "locomotion": 0.018813,
+    "motor": 0.127352,
+    "nesting": 0.10275
+  },
+  "sleep_stage_fraction": {
+    "W": 0.496382,
+    "NREM": 0.393632,
+    "REM": 0.082489,
+    "MA": 0.027496
+  },
+  "seam_count": 2,
+  "review_status": "baseline_accepted"
+}

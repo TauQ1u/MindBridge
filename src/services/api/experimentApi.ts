@@ -1,0 +1,82 @@
+import Papa from 'papaparse'
+import type { Experiment, TimelineFrame, Neuron } from '@/types/models'
+import { visualizationApi } from '@/services/api/visualizationApi'
+import { apiFetch } from '@/services/api/http'
+
+export interface BehaviorStats {
+  condition_id: string
+  duration_seconds: number
+  behavior_fraction: Record<string, number>
+  sleep_stage_fraction: Record<string, number>
+  review_status: string
+}
+
+async function fetchJson<T>(url: string): Promise<T> {
+  const response = await apiFetch(url)
+  if (!response.ok) throw new Error(`API 请求失败 (${response.status}): ${url}`)
+  return response.json() as Promise<T>
+}
+
+async function fetchCsv(url: string) {
+  const response = await apiFetch(url)
+  if (!response.ok) throw new Error(`API 请求失败 (${response.status}): ${url}`)
+  const text = await response.text()
+  const result = Papa.parse<Record<string, unknown>>(text, { header: true, dynamicTyping: true, skipEmptyLines: 'greedy' })
+  if (result.errors.length) throw new Error(`CSV 解析失败: ${result.errors[0].message}`)
+  return result.data
+}
+
+function conditionPath(conditionId: string) {
+  if (!/^[a-z0-9_-]+$/i.test(conditionId)) throw new Error('conditionId 格式无效')
+  return conditionId
+}
+
+export const experimentApi = {
+  async list(): Promise<Experiment[]> {
+    return fetchJson<Experiment[]>('/api/experiments')
+  },
+
+  /** 复核定稿状态（finalized / analysisReady），用于实验列表决定按钮状态 */
+  async reviewStatus(conditionId: string): Promise<{ conditionId: string; finalized: boolean; analysisReady: boolean; finalizedAt?: string }> {
+    return fetchJson(`/api/experiments/${conditionPath(conditionId)}/review-status`)
+  },
+
+  /** 一致性复核定稿：登记 finalized / analysisReady，后端校验无遗留冲突 */
+  async finalizeReview(conditionId: string): Promise<{ finalized: boolean; analysisReady: boolean }> {
+    const response = await apiFetch(`/api/experiments/${conditionPath(conditionId)}/review/finalize`, { method: 'POST' })
+    if (!response.ok) throw new Error(`复核定稿失败 (${response.status})`)
+    return response.json() as Promise<{ finalized: boolean; analysisReady: boolean }>
+  },
+
+  async timeline(conditionId: string): Promise<TimelineFrame[]> {
+    const rows = await fetchCsv(`/api/artifacts/${conditionPath(conditionId)}.review.timeline`)
+    return rows.map((row, index) => ({
+      frameId: Number(row.frame_id ?? index),
+      timestamp: Number(row.timestamp_s ?? 0),
+      videoLabel: String(row.video_behavior ?? ''),
+      videoConf: Number(row.video_behavior_conf ?? 0),
+      neuralLabel: String(row.neural_behavior ?? row.neural_sleep_stage ?? ''),
+      neuralConf: Number(row.neural_behavior_conf ?? row.neural_sleep_conf ?? 0),
+      sleepStage: String(row.final_sleep_stage ?? row.eeg_sleep_stage ?? ''),
+      disagreement: Number(row.disagreement ?? 0) === 1,
+      reviewed: Number(row.reviewed ?? 0) === 1,
+      finalLabel: String(row.final_behavior ?? row.final_sleep_stage ?? ''),
+    }))
+  },
+
+  async visualization(conditionId: string): Promise<{ neurons: Neuron[]; edgeCounts: number[]; metadata: Record<string, unknown> | null }> {
+    const dataset = await visualizationApi.loadCondition(conditionPath(conditionId))
+    const firstFrame = dataset.frames[0]
+    const neurons = Array.from(dataset.positions.keys()).map((id) => ({
+      id,
+      activity: firstFrame?.values[id] ?? 0,
+      activityTrace: dataset.frames.map((frame) => frame.values[id]).filter((value): value is number => typeof value === 'number'),
+    }))
+    const edgeCounts = dataset.frames.map((_, index) => (dataset.edgeFrames[index] ?? []).length)
+    return { neurons, edgeCounts, metadata: dataset.metadata }
+  },
+
+  behaviorStats(conditionId: string): Promise<BehaviorStats> {
+    return fetchJson(`/api/artifacts/${conditionPath(conditionId)}.visualization.behavior_stats`)
+  },
+}

@@ -1,0 +1,84 @@
+{
+  "built_at": "2026-09-17T22:23:22",
+  "principle": "P_i = (x_ROI, y_ROI, z_functional); one shared fixed layout across all conditions; modules colour/centroid only, never ordinal z layers",
+  "source_dff_sha256": "880d12f7060340e42a4068fa0649666bd04ea2268cee520b020bda468909833f",
+  "neuron_count": 117,
+  "window_note": "W from the FULL 25.11 h recording, not the top-30 edge table",
+  "graph": "symmetric kNN graph (union rule, k=12, weights preserved) built from full-W; raw full-W clustering degenerated to singletons and is superseded by this graph",
+  "z_direction": {
+    "eigenvector_axis": 1,
+    "abs_corr_with_roi_x": 0.0489,
+    "abs_corr_with_roi_y": 0.0248,
+    "rule": "minimize max(|corr(e, x_roi)|, |corr(e, y_roi)|)"
+  },
+  "k_selection": {
+    "range": [
+      3,
+      8
+    ],
+    "rule": "eigengap shortlist (top-3 gaps) -> silhouette + bootstrap/half-split ARI rank sum",
+    "shortlist": [
+      3,
+      6,
+      7
+    ],
+    "chosen_k": 3,
+    "per_k": {
+      "3": {
+        "silhouette": 0.2614,
+        "eigengap": 0.101,
+        "ari_mean": 0.5544,
+        "ari_min": 0.307
+      },
+      "4": {
+        "silhouette": 0.3962,
+        "eigengap": 0.0081,
+        "ari_mean": 0.4583,
+        "ari_min": 0.2408
+      },
+      "5": {
+        "silhouette": 0.2543,
+        "eigengap": 0.02,
+        "ari_mean": 0.4931,
+        "ari_min": 0.1805
+      },
+      "6": {
+        "silhouette": 0.2018,
+        "eigengap": 0.0283,
+        "ari_mean": 0.4934,
+        "ari_min": 0.2044
+      },
+      "7": {
+        "silhouette": 0.0422,
+        "eigengap": 0.0267,
+        "ari_mean": 0.4494,
+        "ari_min": 0.0504
+      },
+      "8": {
+        "silhouette": 0.1632,
+        "eigengap": 0.0053,
+        "ari_mean": 0.4554,
+        "ari_min": 0.1418
+      }
+    }
+  },
+  "module_z_geometry": {
+    "centroids": [
+      -0.1658,
+      -0.1206,
+      0.4052
+    ],
+    "adjacent_gaps": [
+      0.0452,
+      0.5258
+    ],
+    "d_min": 0.0452,
+    "natural_intra_module_spread": {
+      "0": 0.7725555411536325,
+      "1": 1.0167878977582716,
+      "2": 0.9174023612926285
+    },
+    "note": "no z cap applied: T=0.2D belonged to the rejected module-z-layer scheme; two modules overlap along z by construction and are separated by colour, not depth"
+  },
+  "seed": 20260714
+}

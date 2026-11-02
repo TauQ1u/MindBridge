@@ -1,0 +1,71 @@
+:root {
+  /* 白色科技简约主题（参考科技 SaaS 风格：白底卡片 + 蓝紫点缀） */
+  --bg: #f2f5fa;
+  --bg-subtle: #edf1f7;
+  --surface: #ffffff;
+  --surface-alt: #f7f9fd;
+  --panel: #eef2f8;
+  --surface-raised: #ffffff;
+  --surface-muted: #f2f5fa;
+
+  --brand: #2f7ef7;
+  --brand-strong: #1d64d8;
+  --brand-soft: rgba(47, 126, 247, .10);
+  --brand-line: rgba(47, 126, 247, .32);
+  --brand-text: #1d64d8;
+
+  --text-strong: #17233d;
+  --text: #33415c;
+  --text-muted: #64748f;
+  --text-faint: #93a1b8;
+
+  --ok: #1faa6b;
+  --ok-soft: rgba(31, 170, 107, .12);
+  --warn: #d99413;
+  --warn-soft: rgba(217, 148, 19, .12);
+  --danger: #dc4c5c;
+  --danger-soft: rgba(220, 76, 92, .10);
+  --info: #2f7ef7;
+  --info-soft: rgba(47, 126, 247, .10);
+  --neutral: #8a97ab;
+  --neutral-soft: rgba(138, 151, 171, .14);
+
+  --tag-teal: #12a594;
+  --tag-blue: #2f7ef7;
+  --tag-amber: #e5a323;
+  --tag-slate: #93a1b8;
+  --tag-purple: #8b7cf6;
+  --tag-rose: #e15b78;
+
+  --border: rgba(23, 35, 61, .09);
+  --border-strong: rgba(23, 35, 61, .18);
+  --shadow-sm: 0 1px 2px rgba(23, 35, 61, .05);
+  --shadow-md: 0 8px 24px rgba(23, 35, 61, .09);
+  --shadow-lg: 0 18px 48px rgba(23, 35, 61, .14);
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, "Consolas", monospace;
+  --topbar-h: 60px;
+  --layout-max: 1440px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --dur: .2s;
+
+  --stage-ingest: #2f7ef7;
+  --stage-review: #e5a323;
+  --stage-align: #8b7cf6;
+  --stage-model: #12a594;
+  --stage-evidence: #1faa6b;
+  --grid-line: rgba(23, 35, 61, .05);
+  --focus-ring: 0 0 0 3px var(--brand-soft);
+
+  /* 3D 场景底色：纯黑，复用建模项目夜空效果 */
+  --scene-bg: #000000;
+  --scene-bg-neuron: #000000;
+}

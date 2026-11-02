@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "experimentId": "MOUSE1-cort_like",
+  "conditionId": "cort_like",
+  "displayName": "抑郁",
+  "executionMode": "precomputed",
+  "mouseId": "mouse1",
+  "dataNature": "synthetic_demo",
+  "pipeline": {
+    "video": {
+      "model": "DeepLabCut-HRNetW32 + VideoMAE + MS-TCN++",
+      "modelVersion": "video-demo-v1"
+    },
+    "calcium": {
+      "model": "STFS-Former",
+      "modelVersion": "stfs-v2"
+    },
+    "sleep": {
+      "source": "preprovided-label"
+    },
+    "decoder": {
+      "model": "MouseNeuralBehaviorDecoder",
+      "modelVersion": "demo-1.0",
+      "contribution": "precomputed_attribution"
+    }
+  },
+  "defaultVersion": "demo-v1",
+  "versions": {
+    "demo-v1": {
+      "resultVersion": "demo-v1",
+      "labelVersion": "labels-demo-v1",
+      "createdAt": "2026-09-21T10:00:00+08:00",
+      "provenance": "versions/demo-v1/provenance.json"
+    }
+  },
+  "artifacts": {
+    "raw.video": "raw/video.mp4",
+    "raw.calcium": "raw/calcium_traces.csv",
+    "raw.eeg_emg": "raw/eeg_emg.csv",
+    "raw.meta": "raw/meta.json",
+    "review.timeline": "versions/demo-v1/review/timeline.csv",
+    "review.conflicts": "versions/demo-v1/review/conflicts.csv",
+    "review.video_prediction": "versions/demo-v1/review/video_prediction.csv",
+    "review.neural_prediction": "versions/demo-v1/review/neural_prediction.csv",
+    "review.sleep_stage_prediction": "versions/demo-v1/review/sleep_stage_prediction.csv",
+    "visualization.calcium": "versions/demo-v1/visualization/calcium.csv",
+    "visualization.dynamic_edges": "versions/demo-v1/visualization/dynamic_edges.csv",
+    "visualization.final_label_timeline": "versions/demo-v1/visualization/final_label_timeline.csv",
+    "visualization.metadata": "versions/demo-v1/visualization/metadata.json",
+    "visualization.behavior_stats": "versions/demo-v1/visualization/behavior_stats.json",
+    "model_output.decoder_modules": "versions/demo-v1/model_output/decoder_modules.json",
+    "model_output.neuron_module_profiles": "versions/demo-v1/model_output/neuron_module_profiles.csv",
+    "model_output.module_frame_evidence": "versions/demo-v1/model_output/module_frame_evidence.json"
+  },
+  "checksums": {
+    "raw.video": "sha256:07b2a3c60fc2d4177c7ddc5eb2503d95ac899844a52ed48f374b513ac0b4e0dd",
+    "raw.calcium": "sha256:c0bdc937aa7c2193511869235be02cb4e8f8d723f1ec721e1807a49ce03d3817",
+    "raw.eeg_emg": "sha256:75209674f22014ac69798ffb56b0d9289646b312567b17d11da2451d67e6374c",
+    "raw.meta": "sha256:0b135d1a93645af45eddfbee16b9f3da96d8fec2440e4e30ed08e94f8b9b986a",
+    "review.timeline": "sha256:dbed4bb52931e180b137bf73d5c4ef03d4f6c86e0f9fa78238f6309b0981e308",
+    "review.conflicts": "sha256:417a0a0cbb4611901eb8aa9117838794711901d307d80f0032b67aeef6702b45",
+    "review.video_prediction": "sha256:fc6ce9cba10cbd05c30fba1fd6af3c2be8e020ac180a264c347029d697563c9c",
+    "review.neural_prediction": "sha256:86acc42661d821d5c496981977804380aae64a638204b1a6d76ec312acc99f79",
+    "review.sleep_stage_prediction": "sha256:8d793a9354e7e291d026c9606a1f67b701fd2fefa0a18d65da843a8a6f60ede5",
+    "visualization.calcium": "sha256:c0bdc937aa7c2193511869235be02cb4e8f8d723f1ec721e1807a49ce03d3817",
+    "visualization.dynamic_edges": "sha256:6c1c8ac3eb70f97c58030b4cf71a61fbfd7f740557dbeaa0f67a24724261a5c7",
+    "visualization.final_label_timeline": "sha256:21a843d28f51f580813808fd32d9fc0f14fcb9a0526a1e4ba08bb2b1525ec645",
+    "visualization.metadata": "sha256:ea1db6880cf60fcd4ffcf8423d63af22fe6e2f4cfcd5ca4e9e7cf5ba4a776cd8",
+    "visualization.behavior_stats": "sha256:3492bd5caef0dbc92161276a63224a1331fe9ba431b1bc0dac10613064dcbde3",
+    "model_output.decoder_modules": "sha256:3bf19900f6137a9b9d76d387dac804463d4133f4040d5a4a36f8a60e0d8fe998",
+    "model_output.neuron_module_profiles": "sha256:2bb4804ee4c8ac27fb92b8d0cdf6c0569dc97731fd078b16c2def021820aa6ce",
+    "model_output.module_frame_evidence": "sha256:0784fc84607ef843694a55177345ad082b8aba90a10bf87d216003da7899605a"
+  }
+}

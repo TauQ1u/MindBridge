@@ -1,0 +1,4 @@
+conflict_id,frame_id,timestamp_s,conflict_type,reference_label,neural_label,status
+C001,13,6.76,wake_behavior,locomotion,motor,pending
+C002,130,67.6,sleep_stage,NREM,W,pending
+C003,444,230.881,sleep_stage,W,NREM,pending

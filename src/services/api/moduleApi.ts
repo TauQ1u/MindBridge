@@ -1,5 +1,7 @@
 import type { ModuleEvidenceResult, ModuleJobState } from '@/types/models'
 import { apiFetch } from '@/services/api/http'
+import Papa from 'papaparse'
+import { fetchStaticJson, fetchStaticText, isStaticDemoMode } from '@/services/api/staticDemo'
 
 /*
  * 行为解码贡献 Module API。
@@ -47,6 +49,30 @@ export const moduleApi = {
 
   /** 创建任务并轮询到 ready，一次性返回整段预计算结果 */
   async loadEvidence(conditionId: string, experimentId?: string): Promise<ModuleEvidenceResult> {
+    if (isStaticDemoMode) {
+      const [modules, framesDoc, profileText] = await Promise.all([
+        fetchStaticJson<{ modelName?: string; modelVersion?: string; method?: string; modules: Array<Record<string, unknown>> }>(`model_output/${conditionId}/decoder_modules.json`),
+        fetchStaticJson<{ frames: ModuleEvidenceResult['frames'] }>(`model_output/${conditionId}/module_frame_evidence.json`),
+        fetchStaticText(`model_output/${conditionId}/neuron_module_profiles.csv`),
+      ])
+      const profiles = Papa.parse<Record<string, string>>(profileText, { header: true, skipEmptyLines: true }).data.map(row => ({
+        neuronId: row.neuron_id,
+        primaryModuleId: row.primary_module_id || null,
+        primaryTargetLabel: row.target_label || null,
+        membershipScore: row.membership_score ? Number(row.membership_score) : null,
+      }))
+      return {
+        model: { name: modules.modelName || 'MouseNeuralBehaviorDecoder', version: modules.modelVersion || 'demo-1.0' },
+        method: modules.method || 'precomputed_attribution',
+        modules: modules.modules.map(module => ({
+          id: String(module.id), name: String(module.name), kind: module.kind as 'behavior' | 'sleep',
+          targetLabel: String(module.targetLabel), memberCount: Array.isArray(module.memberNeuronIds) ? module.memberNeuronIds.length : 0,
+          memberNeuronIds: (module.memberNeuronIds as string[]) || [], color: String(module.color || '#8b5cf6'),
+        })),
+        neuronProfiles: profiles,
+        frames: framesDoc.frames,
+      }
+    }
     const job = await moduleApi.createJob(conditionId, experimentId)
     const startedAt = Date.now()
     for (;;) {

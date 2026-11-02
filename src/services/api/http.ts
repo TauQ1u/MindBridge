@@ -1,9 +1,14 @@
 export const apiBase = ((import.meta.env.VITE_API_BASE_URL as string | undefined) || '/api').replace(/\/$/, '')
 
 export function apiUrl(path: string): string {
+  if (!import.meta.env.VITE_API_BASE_URL && path.startsWith('/api/artifacts/')) {
+    return staticArtifactUrl(path.slice('/api/artifacts/'.length))
+  }
   if (!path.startsWith('/api/')) return path
   return `${apiBase}${path.slice(4)}`
 }
+
+import { staticArtifactUrl } from '@/services/api/staticDemo'
 
 export const UNAUTHORIZED_EVENT = 'mindbridge:unauthorized'
 

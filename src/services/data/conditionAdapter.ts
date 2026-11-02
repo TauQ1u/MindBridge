@@ -1,4 +1,5 @@
 import type { Experiment } from '@/types/models'
+import { apiUrl } from '@/services/api/http'
 
 export interface ConditionViewModel {
   id: string
@@ -13,6 +14,6 @@ export function toConditionViewModel(experiment: Experiment): ConditionViewModel
     id,
     label: experiment.displayName,
     mouseLabel: experiment.mouseId,
-    videoUrl: `/api/artifacts/${id}.raw.video`,
+    videoUrl: apiUrl(`/api/artifacts/${id}.raw.video`),
   }
 }

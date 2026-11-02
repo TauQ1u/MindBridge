@@ -1,5 +1,6 @@
 import type { ProcessingRun, ProcessingStage } from '@/types/models'
 import { apiBase, apiFetch } from '@/services/api/http'
+import { isStaticDemoMode } from '@/services/api/staticDemo'
 
 /*
  * 统一处理任务 API。
@@ -78,9 +79,19 @@ export interface ProcessingApi {
 
 export const processingApi: ProcessingApi = {
   async createRun(experimentId) {
+    if (isStaticDemoMode) return normalizeRun({
+      runId: `DEMO-${Date.now()}`,
+      experimentId,
+      status: 'ready',
+      progress: 100,
+      stage: null,
+      resultVersion: 'demo-v1',
+      nextAction: 'review',
+    })
     return normalizeRun(await postJson<RawRun>(`${apiBase}/experiments/${encodeURIComponent(experimentId)}/runs`))
   },
   async getRun(runId) {
+    if (isStaticDemoMode) return normalizeRun({ runId, experimentId: '', status: 'ready', progress: 100, stage: null, resultVersion: 'demo-v1' })
     return normalizeRun(await getJson<RawRun>(`${apiBase}/runs/${encodeURIComponent(runId)}`))
   },
 }

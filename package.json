@@ -9,7 +9,7 @@
     "dev:server": "node --watch server/index.mjs",
     "dev:full": "concurrently -k \"npm:dev:server\" \"npm:dev\"",
     "build": "vue-tsc -b && vite build",
-    "build:pages": "vue-tsc -b && vite build",
+    "build:pages": "vue-tsc -b && vite build && node scripts/prepare-pages-data.mjs",
     "start": "node server/index.mjs",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit"

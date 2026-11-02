@@ -1,6 +1,6 @@
 # MindBridge
 
-小鼠 mPFC 多模态神经数据分析与可视化工作站，默认使用预计算演示数据。
+小鼠 mPFC 多模态神经数据分析与可视化演示站，使用预计算数据和浏览器本地状态。
 
 ## 结构
 
@@ -19,4 +19,4 @@ npm run dev:full
 
 前端：`http://localhost:5173`；后端检查：`http://localhost:3001/api/health`。先用 `node scripts/hash-password.mjs <密码>` 生成唯一管理员口令哈希并写入 `.env`；未设置时后端不会启动。
 
-生产运行：`npm run build && npm start`。GitHub Pages 自动发布前端；登录和数据功能需另行部署后端，并配置 `VITE_API_BASE_URL`、`MINDBRIDGE_ALLOWED_ORIGINS` 与 HTTPS 安全选项。
+GitHub Pages 自动发布静态演示版，无需服务器。登录、复核和报告只保存在浏览器会话中；本地完整后端运行：`npm run build && npm start`。

@@ -9,6 +9,7 @@ import {
   type NeuronPosition,
 } from '@neuron3d/neuron/neuronUtils'
 import { apiBase, apiFetch, apiUrl } from '@/services/api/http'
+import { fetchStaticJson, fetchStaticText, isStaticDemoMode } from '@/services/api/staticDemo'
 
 export interface VisualizationDataset {
   conditionId: string
@@ -52,11 +53,27 @@ async function readJson<T>(url: string): Promise<T> {
 export const staticVisualizationDataSource: VisualizationDataSource = {
   async getBundle(conditionId) {
     if (!/^[a-z0-9_-]+$/i.test(conditionId)) throw new Error('conditionId 格式无效')
+    if (isStaticDemoMode) {
+      const metadata = await fetchStaticJson<Record<string, unknown>>(`visualization_input/${conditionId}/metadata.json`)
+      return { experimentId: `MOUSE1-${conditionId}`, conditionId, version: 'demo-v1', labelVersion: 'labels-demo-v1', executionMode: 'static-demo', metadata, files: {} }
+    }
     return readJson<VisualizationBundle>(`${apiBase}/experiments/${encodeURIComponent(conditionId)}/visualization-bundle`)
   },
 
   async loadCondition(conditionId, signal) {
     if (!/^[a-z0-9_-]+$/i.test(conditionId)) throw new Error('conditionId 格式无效')
+    if (isStaticDemoMode) {
+      const [calcium, labels, edges, positions, metadata] = await Promise.all([
+        fetchStaticText(`visualization_input/${conditionId}/calcium.csv`),
+        fetchStaticText(`visualization_input/${conditionId}/final_label_timeline.csv`),
+        fetchStaticText(`visualization_input/${conditionId}/dynamic_edges.csv`),
+        fetchStaticText('visualization_input/neuron_positions.csv'),
+        fetchStaticJson<Record<string, unknown>>(`visualization_input/${conditionId}/metadata.json`),
+      ])
+      const frames = parseCalciumCsv(calcium)
+      mergeLabelsIntoFrames(frames, parseLabelTimelineCsv(labels))
+      return { conditionId, frames, edgeFrames: parseDynamicEdgeCsv(edges), positions: parsePositionCsv(positions), metadata }
+    }
     /* 第一步：向后端确认结果版本与数据包可用性（切换 Provider 时本接口不变） */
     const bundle = await staticVisualizationDataSource.getBundle(conditionId)
     /* 第二步：按 artifact 接口拉取各文件，CSV 解析逻辑保持不变 */
